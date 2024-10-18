@@ -2,29 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-// const testCards = [
-//     {
-//       id: 1,
-//       title: "Жим лёжа",
-//       picture: "https://sportwiki.to/images/6/67/Sil_men.jpg",
-//     },
-//     {
-//       id: 2,
-//       title: "Становая тяга",
-//       picture: "https://sportwiki.to/images/0/0e/Silov_men84.jpg",
-//     },
-//     {
-//       id: 3,
-//       title: "Пауэрлифтинг",
-//       picture: "https://sportwiki.to/images/f/fa/Silov_men112.jpg",
-//     },
-//     {
-//       id: 4,
-//       title: "Бёрпи",
-//       picture: "https://sportwiki.to/images/1/11/Burpee1.jpg",
-//     },
-//   ];
-
 export default function QuestionCard() {
   const { themeId } = useParams();
   const [question, setQuestion] = useState({});
