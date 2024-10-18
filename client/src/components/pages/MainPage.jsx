@@ -1,5 +1,4 @@
 import React from "react";
-// import QuestionCard from "../ui/QuestionCard";
 import ThemeCard from "../ui/ThemeCard";
 
 export default function CardsPage() {
