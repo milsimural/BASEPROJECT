@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { Theme } = require('../../db/models');
+const { Theme, Quest } = require('../../db/models');
 
 const themeRouter = Router();
 
@@ -14,11 +14,11 @@ themeRouter.get('/', async (req, res) => {
       .json({ error: `Ошибка при получении всех тем: ${error.theme}` });
   }
 });
-themeRouter.get('/:ThemeId', async (req, res) => {
+themeRouter.get('/:ThemeID', async (req, res) => {
   try {
-    const { ThemeId } = req.params;
-    const oneTheme = await Theme.findOne({
-      where: {id: ThemeId}
+    const { ThemeID } = req.params;
+    const oneTheme = await Quest.findAll({
+      where: {id: ThemeID}
     })
     res.json(oneTheme)
   } catch (error) {
