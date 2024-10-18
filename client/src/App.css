@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,3 +41,23 @@
 .read-the-docs {
   color: #888;
 }
+=======
+body {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .card {
+    background-color: #1e1e1e;
+    border: none; 
+  }
+  
+  .btn {
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+>>>>>>> main

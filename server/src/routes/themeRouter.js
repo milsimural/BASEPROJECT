@@ -17,16 +17,25 @@ themeRouter.get('/', async (req, res) => {
 themeRouter.get('/:ThemeID', async (req, res) => {
   try {
     const { ThemeID } = req.params;
-    const oneTheme = await Quest.findAll({
-      where: {id: ThemeID}
-    })
-    res.json(oneTheme)
+    const quests = await Quest.findAll({
+      where: { ThemeID: ThemeID }, 
+      include: [{
+        model: Theme,
+        as: 'theme',
+        attributes: ['name']
+      }]
+    });
+    const result = quests.map(quest => ({
+      ...quest.toJSON(),
+      themeName: quest.theme ? quest.theme.name : 'Unknown'
+    }));
+
+    res.json(result);
+
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: `Концентрация Жень в этой группе зашкаливает!!!! ${error.message}` });
+    res.status(500).json({ error: `Концентрация Жень в этой группе зашкаливает!!!! ${error.message}` });
   }
-})
+});
 
 
 module.exports = themeRouter;
