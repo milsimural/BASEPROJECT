@@ -2,29 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-// const testThemes = [
-//   {
-//     id: 1,
-//     title: "Жим лёжа",
-//     picture: "https://sportwiki.to/images/6/67/Sil_men.jpg",
-//   },
-//   {
-//     id: 2,
-//     title: "Становая тяга",
-//     picture: "https://sportwiki.to/images/0/0e/Silov_men84.jpg",
-//   },
-//   {
-//     id: 3,
-//     title: "Пауэрлифтинг",
-//     picture: "https://sportwiki.to/images/f/fa/Silov_men112.jpg",
-//   },
-//   {
-//     id: 4,
-//     title: "Бёрпи",
-//     picture: "https://sportwiki.to/images/1/11/Burpee1.jpg",
-//   },
-// ];
-
 export default function ThemeCard() {
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +19,6 @@ export default function ThemeCard() {
       }
     };
     fetchThemes();
-
   }, []);
 
   if (loading) return <div>Загрузка...</div>; // Добавить сюда потом красивый лоадер
@@ -68,13 +44,9 @@ export default function ThemeCard() {
                 (e.currentTarget.style.transform = "scale(1)")
               }
             >
-              <img
-                src={theme.picture}
-                alt={theme.title}
-                className="card-img-top"
-              />
+              <img src={theme.pic} alt={theme.name} className="card-img-top" />
               <div className="card-body">
-                <h5 className="card-title text-center">{theme.title}</h5>
+                <h5 className="card-title text-center">{theme.name}</h5>
               </div>
             </Link>
           </div>
