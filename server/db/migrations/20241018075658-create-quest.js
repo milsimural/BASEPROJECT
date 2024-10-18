@@ -1,3 +1,5 @@
+/* eslint-disable lines-around-directive */
+/* eslint-disable no-unused-vars */
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
@@ -30,7 +32,7 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      ThemeID: {
+      ThemeId: { 
         type: Sequelize.INTEGER,
         references: {
           model: 'Themes',
