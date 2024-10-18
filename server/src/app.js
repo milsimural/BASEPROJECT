@@ -1,13 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const messagesRouter = require('./routes/messagesRouter');
+const themeRouter = require('./routes/themeRouter');
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.use('/api/messages', messagesRouter);
+app.use('/api', themeRouter);
 
 module.exports = app;
