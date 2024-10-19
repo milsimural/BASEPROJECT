@@ -9,33 +9,24 @@ themeRouter.get('/', async (req, res) => {
     const theme = await Theme.findAll();
     res.json(theme);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: `Ошибка при получении всех тем: ${error.theme}` });
+    res.status(500).json({ error: `Ошибка при получении всех тем: ${error.theme}` });
   }
 });
 themeRouter.get('/:ThemeID', async (req, res) => {
   try {
     const { ThemeID } = req.params;
+    
+    
     const quests = await Quest.findAll({
-      where: { ThemeID: ThemeID }, 
-      include: [{
-        model: Theme,
-        as: 'theme',
-        attributes: ['name']
-      }]
+      where: { ThemeID },
     });
-    const result = quests.map(quest => ({
-      ...quest.toJSON(),
-      themeName: quest.theme ? quest.theme.name : 'Unknown'
-    }));
-
-    res.json(result);
-
+    console.log('Полученные вопросы:', quests);
+    res.send(quests);
   } catch (error) {
-    res.status(500).json({ error: `Концентрация Жень в этой группе зашкаливает!!!! ${error.message}` });
+    res.status(500).json({
+      error: `Концентрация Жень в этой группе зашкаливает!!!! ${error.message}`,
+    });
   }
 });
-
 
 module.exports = themeRouter;

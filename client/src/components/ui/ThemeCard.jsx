@@ -11,6 +11,7 @@ export default function ThemeCard() {
     const fetchThemes = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/");
+        console.log('Ответ от сервера:', response.data);
         setThemes(response.data);
       } catch (err) {
         setError("Ошибка при загрузке тем");
@@ -28,7 +29,7 @@ export default function ThemeCard() {
     <div className="container">
       <div className="row">
         {themes.map((theme) => (
-          <div className="col-md-4" key={theme.id}>
+          <div className="col-md-5" key={theme.id}>
             <Link
               to={`/${theme.id}`}
               className="card mb-4"

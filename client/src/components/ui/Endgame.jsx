@@ -9,15 +9,15 @@ export default function Endgame() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowCat(false);
-    }, 2000);
+    }, 7000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div>
       {showCat ? (
-        <div className="cat-animation">
-          <img src="../../assets/endgame.png" />
+        <div className="cat-animation d-flex flex-column align-items-center">
+          <img src="/endgame.png" width="600px" height="600px" />
         </div>
       ) : (
         <div>

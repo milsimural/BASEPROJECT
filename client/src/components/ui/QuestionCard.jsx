@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 export default function QuestionCard() {
   const { themeId } = useParams();
-  const [question, setQuestion] = useState({});
+  const navigate = useNavigate();
+  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -14,22 +16,16 @@ export default function QuestionCard() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
+        console.log("Тема ID:", themeId);
         const response = await axios.get(
           `http://localhost:3000/api/${themeId}`
         );
-        setQuestion(response.data);
-        
-        const allAnswers = [
-          response.data.Ans1,
-          response.data.Ans2,
-          response.data.Ans3,
-          response.data.RightAns,
-        ];
+        const questionsData = response.data;
 
-        setAnswers(mixAnswers(allAnswers));
-        setCorrectAnswer(response.data.RightAns);
+        setQuestions(questionsData);
+        loadQuestion(questionsData[0]);
       } catch (err) {
-        setError("Ошибка при загрузке вопросов", err);
+        setError(`Ошибка при загрузке вопросов: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -37,6 +33,18 @@ export default function QuestionCard() {
 
     fetchQuestions();
   }, [themeId]);
+
+  const loadQuestion = (question) => {
+    const allAnswers = [
+      question.Ans1,
+      question.Ans2,
+      question.Ans3,
+      question.RightAns,
+    ];
+
+    setAnswers(mixAnswers(allAnswers));
+    setCorrectAnswer(question.RightAns);
+  };
 
   const mixAnswers = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -46,8 +54,25 @@ export default function QuestionCard() {
     return array;
   };
 
-  if (loading) return <div>Загрузка...</div>; // добавить лоадер потом
+  const handleAnswer = (answer) => {
+    setSelectedAnswer(answer);
+  };
+
+  const handleNextQuestion = () => {
+    const nextIndex = currentQuestionIndex + 1;
+    if (nextIndex < questions.length) {
+      setCurrentQuestionIndex(nextIndex);
+      loadQuestion(questions[nextIndex]);
+      setSelectedAnswer(null);
+    } else {
+      navigate("/endGame");
+    }
+  };
+
+  if (loading) return <div>Загрузка...</div>;
   if (error) return <div>{error}</div>;
+
+  const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <div
@@ -59,20 +84,33 @@ export default function QuestionCard() {
       }}
     >
       <div className="card-body">
-        <h5 className="card-title text-center">Nighthawk Trivia</h5>
-        <p className="card-text text-center display-6">{question.text}</p>
+        <p className="card-text text-center display-6">
+          {currentQuestion.Text}
+        </p>
         <div className="d-flex flex-column align-items-center">
           {answers.map((answer, index) => (
-            <a
+            <button
               key={index}
-              href="#"
-              className="btn btn-outline-light mb-2"
-              style={{ width: "80%" }}
+              className="btn mb-2"
+              style={{
+                width: "80%",
+                backgroundColor:
+                  selectedAnswer === answer
+                    ? answer === correctAnswer
+                      ? "green"
+                      : "red"
+                    : "transparent",
+                color: "white",
+              }}
+              onClick={() => handleAnswer(answer)}
             >
               {answer}
-            </a>
+            </button>
           ))}
         </div>
+        <button className="btn btn-primary mt-3" onClick={handleNextQuestion}>
+          Следующий вопрос
+        </button>
       </div>
     </div>
   );
