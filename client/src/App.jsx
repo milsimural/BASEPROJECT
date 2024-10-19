@@ -4,6 +4,7 @@ import MainPage from "./components/pages/MainPage";
 import Layout from "./components/Layout";
 import './App.css';
 import QuestionCard from "./components/ui/QuestionCard";
+import Endgame from "./components/ui/Endgame";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,8 +16,12 @@ function App() {
           element: <MainPage />,
         },
         {
-          path: "/:cardId",
+          path: "/:themeId",
           element: <QuestionCard />,
+        },
+        {
+          path: "/endGame",
+          element: <Endgame />,
         },
       ],
     },
